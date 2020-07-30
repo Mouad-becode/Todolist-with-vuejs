@@ -2,8 +2,12 @@
     <section id="todos">
         <div class="todo" v-for="(todo) in todos" :key="todo.id">
            <label>
-           <input type="checkbox"> {{ todo.name }}
+           <input type="checkbox" name="done" v-if="todo.done" checked> 
+           <input type="checkbox" name="done" v-else> 
+           {{ todo.name }}
+           <button class="Remove" v-on:click="() => removeTodo(todo.id)">Remove</button>
            </label>
+           
         </div> 
     </section>
 </template>
@@ -12,6 +16,11 @@
     export default {
         name:"Todos",
         props:["todos"],
+            methods: {
+                removeTodo: function (id) {
+                    this.$emit("removeTodo", id)
+                }
+            }
     }
 </script>
 
@@ -25,7 +34,10 @@
 
         .todo {
 			display: flex;
-             width: 24%;
+            width: 24%;
+
+             
+             
 			
             label {
 				flex: 1;
@@ -33,8 +45,13 @@
                 margin: 15px;
                 padding: 15px;
                 background: #FFF;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+    
                 
 			}
+
 		}
     }
 </style>
